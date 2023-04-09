@@ -2,6 +2,7 @@ let numCards = Number(prompt("Escolha um número de cartas par entre 4 e 14 para
 let cards = document.querySelector(".cards");
 let flipped = false;
 let contador = 1;
+let contadorJogadas = 0;
 
 //array inicial dos cards
 let cardsArray = [
@@ -20,32 +21,31 @@ function comparador() {
 }
 
 //repetição do prompt
-if (numCards % 2 !== 0 || numCards === null || numCards < 4 || numCards > 14) {
-  Number(prompt("Escolha um número de cartas par entre 4 e 14 para jogar"));
-} else {
-  renderizaCards(numCards);
+while (numCards % 2 !== 0 || numCards === null || numCards < 4 || numCards > 14) {
+  numCards = Number(prompt("Escolha um número de cartas par entre 4 e 14 para jogar"));
 }
 
 //renderização dos cards
-function renderizaCards(num) {
-  for (let i = 0; i < num; i++) {
-      cards.innerHTML = cards.innerHTML + `
-      <div class="card" onclick="virarCarta(this)">
-        <div class="gameCard front-face face">
-          <img class="gameCardImg" src="./assets/front.png" alt="card">
-        </div>
-        <div class="gameCard back-face face">
-          <img class="gameCardGif" src="./assets/${arrayFinal[i]}">
-        </div>
+for (let i = 0; i < numCards; i++) {
+    cards.innerHTML = cards.innerHTML + `
+    <div class="card" onclick="virarCarta(this)">
+      <div class="gameCard front-face face">
+        <img class="gameCardImg" src="./assets/front.png" alt="card">
       </div>
-      `;
-  } 
-}   
+      <div class="gameCard back-face face">
+        <img class="gameCardGif" src="./assets/${arrayFinal[i]}">
+      </div>
+    </div>
+    `;
+} 
+  
 
 function virarCarta(carta) {
   if(flipped === true){
     return;
 }
+
+  contadorJogadas++;
 
   const turn1 = carta.querySelector(".front-face");
   turn1.classList.add("selected-front");
@@ -77,6 +77,7 @@ function virarCarta(carta) {
     }
     setTimeout(resetJogada, 1000);
   }
+  setTimeout(fimDeJogo, 1000);
 }
 
 
@@ -100,4 +101,11 @@ function resetJogada() {
   tentativa2f = 0;
 
   flipped = false;
+}
+
+function fimDeJogo() {
+  const cardsVirados = document.querySelectorAll(".selected-back");
+  if (cardsVirados.length === numCards) {
+    alert(`Você ganhou em ${contadorJogadas} jogadas!`)
+  }
 }
