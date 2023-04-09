@@ -28,11 +28,11 @@ while (numCards % 2 !== 0 || numCards === null || numCards < 4 || numCards > 14)
 //renderização dos cards
 for (let i = 0; i < numCards; i++) {
     cards.innerHTML = cards.innerHTML + `
-    <div class="card" onclick="virarCarta(this)">
-      <div class="gameCard front-face face">
+    <div class="card"  data-test="card" onclick="virarCarta(this)">
+      <div class="gameCard front-face face" data-test="face-down-image">
         <img class="gameCardImg" src="./assets/front.png" alt="card">
       </div>
-      <div class="gameCard back-face face">
+      <div class="gameCard back-face face" data-test="face-up-image">
         <img class="gameCardGif" src="./assets/${arrayFinal[i]}">
       </div>
     </div>
