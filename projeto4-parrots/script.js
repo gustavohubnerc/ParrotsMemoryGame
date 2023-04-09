@@ -42,4 +42,62 @@ function renderizaCards(num) {
   } 
 }   
 
+function virarCarta(carta) {
+  if(flipped === true){
+    return;
+}
 
+  const turn1 = carta.querySelector(".front-face");
+  turn1.classList.add("selected-front");
+
+  const turn2 = carta.querySelector(".back-face");
+  turn2.classList.add("selected-back");
+
+  if(contador === 1) {   
+    tentativa1 = carta.querySelector(".back-face");
+    tentativa1f = carta.querySelector(".front-face");
+
+    contador++;
+  } else if (contador === 2) {
+    tentativa2 = carta.querySelector(".back-face");
+    tentativa2f = carta.querySelector(".front-face");
+
+    if(tentativa1.innerHTML === tentativa2.innerHTML){
+      flipped = true;
+
+      tentativa1.classList.add("selected-back");
+      tentativa1f.classList.add("selected-front");
+      
+      tentativa2.classList.add("selected-back");
+      tentativa2f.classList.add("selected-front");
+    } else {
+      flipped = true;
+
+      setTimeout(desviraCard, 1000);
+    }
+    setTimeout(resetJogada, 1000);
+  }
+}
+
+
+function desviraCard() {
+  tentativa1.classList.remove("selected-back");
+  tentativa1f.classList.remove("selected-front");
+
+  tentativa2.classList.remove("selected-back");
+  tentativa2f.classList.remove("selected-front");
+
+  flipped = false;
+}
+
+
+function resetJogada() {
+  contador = 1;
+
+  tentativa1 = 0;
+  tentativa2 = 0;
+  tentativa1f = 0;
+  tentativa2f = 0;
+
+  flipped = false;
+}
