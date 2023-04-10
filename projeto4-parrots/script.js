@@ -3,6 +3,8 @@ let cards = document.querySelector(".cards");
 let flipped = false;
 let contador = 1;
 let contadorJogadas = 0;
+let idInterval;
+let t = 0;
 
 //array inicial dos cards
 let cardsArray = [
@@ -38,12 +40,15 @@ for (let i = 0; i < numCards; i++) {
     </div>
     `;
 } 
-  
 
 function virarCarta(carta) {
   if(flipped === true){
     return;
-}
+  }
+
+  if(contadorJogadas === 0){
+    idInterval = setInterval(cronometro, 1000);
+  }
 
   contadorJogadas++;
 
@@ -106,6 +111,13 @@ function resetJogada() {
 function fimDeJogo() {
   const cardsVirados = document.querySelectorAll(".selected-back");
   if (cardsVirados.length === numCards) {
-    alert(`Você ganhou em ${contadorJogadas} jogadas!`)
+    alert(`Você ganhou em ${contadorJogadas} jogadas! A duração do jogo foi de ${t} segundos!`);
+    clearInterval(idInterval);
   }
+}
+
+function cronometro() {
+  t++;
+  let time = document.querySelector(".timer");
+  time.innerHTML = t;
 }
